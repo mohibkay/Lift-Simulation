@@ -1,12 +1,10 @@
-const liftCar = document.querySelector('.lift-car');
-const liftUpBtn = document.querySelector('.liftUpBtn');
-const liftDownBtn = document.querySelector('.liftDownBtn');
 const floorSectionContainer = document.querySelector('.main');
 const floorSection = document.querySelector('.floor-section');
 const formDialog = document.querySelector('.formDialog');
 const inputForm = document.querySelector('.inputForm');
 const dialogBtn = document.querySelector('.dialogBtn');
 const showDialog = document.querySelector('.showDialog');
+let liftCar, liftUpBtn, liftDownBtn;
 
 function renderFloorSection() {
   const numberOfFloors = document.querySelector('#floors').value;
@@ -16,14 +14,16 @@ function renderFloorSection() {
     const floorSectionCloned = floorSection.cloneNode(true);
     const floorCount = floorSectionCloned.querySelector('.floor-number');
     const liftContainer = floorSectionCloned.querySelector('.lift-container');
-    const liftUpBtn = floorSectionCloned.querySelector('.liftUpBtn');
-    const liftDownBtn = floorSectionCloned.querySelector('.liftDownBtn');
+    liftUpBtn = floorSectionCloned.querySelector('.liftUpBtn');
+    liftDownBtn = floorSectionCloned.querySelector('.liftDownBtn');
     liftUpBtn.id = `liftUpBtn-${i}`;
     liftDownBtn.id = `liftDownBtn-${i}`;
 
+    liftUpBtn.addEventListener('click', (event) => handleUpBtnClick(event));
+
     if (i === 0) {
       for (let j = 0; j < numberOfLifts; j++) {
-        const liftCar = document.createElement('div');
+        liftCar = document.createElement('div');
         liftCar.className = 'lift-car';
         liftCar.id = `lift-${j}`;
         liftContainer.append(liftCar);
@@ -39,9 +39,11 @@ function renderFloorSection() {
   }
 }
 
-const handleUpBtnClick = () => {
-  console.log('up btn clicked ');
-  liftCar.classList.add('move');
+const handleUpBtnClick = (event) => {
+  var rect = liftCar.getBoundingClientRect();
+  const buttonPosition = event.clientY - rect.top - 39.5;
+  console.log('buttonPos', event.clientY, rect.top, liftCar);
+  liftCar.style.transform = `translateY(${buttonPosition}px)`;
 };
 
 formDialog.showModal();
@@ -55,5 +57,3 @@ dialogBtn.addEventListener('click', () => {
   floorSectionContainer.style.display = 'block';
   renderFloorSection();
 });
-console.log('liftUpBtn', liftUpBtn);
-liftUpBtn.addEventListener('click', handleUpBtnClick);

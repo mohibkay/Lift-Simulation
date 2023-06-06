@@ -39,12 +39,8 @@ section:first-child {
   min-width: 75px;
   height: 125px;
   background-color: silver;
-  margin: 0 2 rem;
-}
-
-.lift-car.move {
-  transform: translateY(-200px);
-  transition: transform ease-in-out 2.5s 0.5s;
+  margin: 0 2rem;
+  transition: transform ease-in-out 0.5s 0.5s;
 }
 
 .floor {
